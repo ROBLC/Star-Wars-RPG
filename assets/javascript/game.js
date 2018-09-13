@@ -15,6 +15,29 @@
 //*each chracter has health points, attack power and counter attack power
 
 //*eahc time the user attacks his attak power increases by the base attack power 
+
+
+var user;
+var defender = null;
+var characters = ["anakin","obi-wan","qui-gon","maul"];
+var attackBtn = document.querySelector("#attack");
+var userAttack ;
+var userCounter;
+var userHealth;
+var userExp = 0;
+var defenderAttack;
+var defenderHealth;
+var defenderHealth;
+var userStats = document.querySelector("#attackStats");
+var defenderStats = document.querySelector("#counterStats");
+var userName;
+var defenderName;
+var userHP;
+var userAP;
+var defenderHP;
+var enemiesLeft = 3;
+$("document").ready(function(){
+    
 $("#anakin").attr("HP", 100);
 $("#anakin").attr("AP", 6);
 $("#anakin").attr("CA", 10);
@@ -34,26 +57,6 @@ $("#maul").attr("HP", 180);
 $("#maul").attr("AP", 12);
 $("#maul").attr("CA", 25);
 $("#maul").attr("name", "Darth Maul");
-
-var user;
-var defender;
-var characters = ["anakin","obi-wan","qui-gon","maul"];
-var attackBtn = document.querySelector("#attack");
-var userAttack ;
-var userCounter;
-var userHealth;
-var userExp = 0;
-var defenderAttack;
-var defenderHealth;
-var defenderHealth;
-var userStats = document.querySelector("#attackStats");
-var defenderStats = document.querySelector("#counterStats");
-var userName;
-var defenderName;
-var userHP;
-var userAP;
-var defenderHP;
-$("document").ready(function(){
     
     function chooseCharacter() {
     $(".characterSelection").on("click", ".character", function () {
@@ -93,30 +96,90 @@ $("document").ready(function(){
         })
     }
     function attackPhase(){
-
+       
         $(attackBtn).on("click", function() {
-            userExp = userExp + Number(userAttack);
-            defenderHealth = defenderHealth - userExp;
-            userHealth = userHealth - defenderCounter;
-          
-            console.log("______")
-            console.log(userExp);
-            console.log(userHealth);
-            console.log(defenderHealth);
-            $("#attackStats").text("You attacked " + defenderName + " for " + userExp + " damage.");
-            $("#counterStats").text(defenderName + " attacked you for " + defenderCounter + " damage.");
-            $(userHP).text("HP:" + userHealth);
-            $(userAP).text("AP:" + userExp);
-            $(defenderHP).text("HP:" + defenderHealth);
-            if (defenderHP >1) {
-                
+            console.log(defender);
+            if (defender === null) {
+                console.log("pick an enemy");
             }
+            else {
+                userExp = userExp + Number(userAttack);
+                defenderHealth = defenderHealth - userExp;
+                userHealth = userHealth - defenderCounter;
           
+                console.log("______")
+                console.log(userExp);
+                console.log(userHealth);
+                console.log(defenderHealth);
+                $("#attackStats").text("You attacked " + defenderName + " for " + userExp + " damage.");
+                $("#counterStats").text(defenderName + " attacked you for " + defenderCounter + " damage.");
+                $(userHP).text("HP:" + userHealth);
+                $(userAP).text("AP:" + userExp);
+                $(defenderHP).text("HP:" + defenderHealth);
+                if (defenderHealth <= 1) {
+                    $("#attackStats").text("You defeated " + defenderName );
+                    ($("#"+defender)).css("display", "none");
+                    defender=null;
+                    enemiesLeft--;
+                    console.log("hi");
+                    choosedefender();
+                }
+                if (enemiesLeft === 0) {
+                    console.log("You win");
+                    reset();
+                    gameLoop();
+                }
+             
+                if (userHealth <= 0) {
+
+                    console.log("you lose");
+                    reset();
+                    gameLoop();
+                }
+                console.log(enemiesLeft);
+            }
         })
     }
-    chooseCharacter() 
-    
+    function reset() {
+        $(".characterSelection").append($("#qui-gon"));
+        $(".characterSelection").append($("#obi-wan"));
+        $(".characterSelection").append($("#anakin"));
+        $(".characterSelection").append($("#maul"));
 
+        $("#qui-gon").css("display", "block");
+        $("#obi-wan").css("display", "block");
+        $("#maul").css("display", "block");
+        $("#anakin").css("display", "block");
+
+        $("#qui-gonHP").text("HP:"+($("#qui-gon")).attr("HP"));
+        $("#qui-gonAP").text("AP:"+($("#qui-gon")).attr("AP"));
+        $("#qui-gonCA").text("CA:"+($("#qui-gon")).attr("CA"));
+
+        $("#obi-wanHP").text("HP:"+($("#obi-wan")).attr("HP"));
+        $("#obi-wanAP").text("AP:"+($("#obi-wan")).attr("AP"));
+        $("#obi-wanCA").text("CA:"+($("#obi-wan")).attr("CA"));
+
+        $("#anakinHP").text("HP:"+($("#anakin")).attr("HP"));
+        $("#anakinAP").text("AP:"+($("#anakin")).attr("AP"));
+        $("#anakinCA").text("CA:"+($("#anakin")).attr("CA"));
+
+        $("#maulHP").text("HP:"+($("#maul")).attr("HP"));
+        $("#maulAP").text("AP:"+($("#maul")).attr("AP"));
+        $("#maulCA").text("CA:"+($("#maul")).attr("CA"));
+
+        enemiesLeft= 3;
+        $("#counterStats").text(defenderName + " attacked you for " + defenderCounter + " damage.");
+        userExp=0;
+        defender=null;
+
+    }
+    function gameLoop() {
+        chooseCharacter();
+        choosedefender();
+      
+    }
+
+    chooseCharacter(); 
     choosedefender();
     attackPhase();
     
