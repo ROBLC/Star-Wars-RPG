@@ -1,0 +1,64 @@
+body {
+    background-image: url("https://images.alphacoders.com/107/thumb-1920-107763.jpg");
+    margin:20px;
+   
+}
+header {
+    color:#ffff;
+    font-size: 36px;
+    text-align: center
+}
+.style {
+    float:left;
+    padding: 10px;
+    background-color:#ffff;
+    border: solid  black 1px;
+}
+.name {
+    text-align: center;
+    color:black;
+    font-size: 16px;
+}
+.HP {
+    text-align: center ;
+    color:black;
+    font-size: 14px;
+}
+.AP {
+    text-align: center;
+    color:black;
+    font-size: 14px;
+
+}
+.CA {
+    text-align: center;
+    color:black;
+    font-size: 14px;
+
+}
+#characterChoosen {
+    clear:both;
+    color:#ffff;
+    font-size: 24px;
+}
+#enemiesAvailable {
+    clear:both;
+    color:#ffff;
+    font-size: 24px;
+}
+#fightSection {
+    clear:both;
+    color:#ffff;
+    font-size: 24px;
+}
+#defenderChoosen {
+    clear:both;
+    color:#ffff;
+    font-size: 24px;
+}
+#stats {
+    clear:both;
+    color:#ffff;
+    font-size: 18px;
+    padding-top: 20px;
+}

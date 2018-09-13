@@ -15,32 +15,113 @@
 //*each chracter has health points, attack power and counter attack power
 
 //*eahc time the user attacks his attak power increases by the base attack power 
+$("#anakin").attr("HP", 100);
+$("#anakin").attr("AP", 10);
+$("#anakin").attr("CA", 15);
+$("#anakin").attr("name", "Anakin Skywalker");
 
+$("#obi-wan").attr("HP", 180);
+$("#obi-wan").attr("AP", 15);
+$("#obi-wan").attr("CA", 25);
+$("#obi-wan").attr("name", "Obi Wan Kenobi");
 
+$("#qui-gon").attr("HP", 220);
+$("#qui-gon").attr("AP", 20);
+$("#qui-gon").attr("CA", 35);
+$("#qui-gon").attr("name", "Qui gon Jin");
 
-var characters = {
-        anakin = {
-            HP = 100,
-            AP = 10,
-            CA = 15,
-            name = "Anakin Skywalker" 
-        },
-        maul = {
-            HP = 250,
-            AP = 30,
-            CA = 35,
-            name = "Darth Maul"
-        },
-        obi = {
-            HP = 180,
-            AP = 15,
-            CA = 25,
-            name = "Obi Wan Kenobi"
-        },
-        qui = {
-            HP = 220,
-            AP = 20,
-            CA = 35,
-            name = "Qui Gon Jin"
+$("#maul").attr("HP", 250);
+$("#maul").attr("AP", 30);
+$("#maul").attr("CA", 35);
+$("#maul").attr("name", "Darth Maul");
+
+var user;
+var defender;
+var characters = ["anakin","obi-wan","qui-gon","maul"];
+var attackBtn = document.querySelector("#attack");
+var userAttack ;
+var userCounter;
+var userHealth;
+var userExp = 0;
+var defenderAttack;
+var defenderHealth;
+var defenderHealth;
+var userStats = document.querySelector("#attackStats");
+var defenderStats = document.querySelector("#counterStats");
+var userName;
+var defenderName;
+var userHP;
+var userAP;
+var defenderHP;
+$("document").ready(function(){
+    
+    function chooseCharacter() {
+    $(".characterSelection").on("click", ".character", function () {
+        console.log(this);
+        user= $(this).attr("id");
+        console.log(user);
+        $("#characterChoosen").append($("#"+user));
+        for (i=0; i < characters.length; i++) {
+            if (characters[i] != user) {
+                $("#enemiesAvailable").append($("#"+characters[i]));
+            }
         }
-}
+         userAttack = ($("#"+user)).attr("AP");
+         userCounter = ($("#"+user)).attr("CA");
+         userHealth = ($("#"+user)).attr("HP");
+         userName = ($("#"+user)).attr("name")
+         userHP = ($("#"+user+"HP"))
+        console.log(userHP);
+        
+    });
+  
+    
+    }
+    function choosedefender() {
+        $("#enemiesAvailable").one("click",".character", function () {
+            defender= $(this).attr("id");
+            $("#defenderChoosen").append($("#"+defender));
+            defenderAttack = ($("#"+defender)).attr("AP");
+            defenderCounter = ($("#"+defender)).attr("CA");
+            defenderHealth = ($("#"+defender)).attr("HP");
+            defenderName = ($("#"+defender)).attr("name");
+            console.log(this);
+            
+
+        })
+    }
+    function attackPhase(){
+
+        $(attackBtn).on("click", function() {
+            
+            defenderHealth = defenderHealth - userAttack;
+            userHealth = userHealth - defenderAttack;
+            userExp = userExp + Number(userAttack);
+            console.log("______")
+            console.log(userExp);
+            console.log(userHealth);
+            console.log(defenderHealth);
+            $("#attackStats").text("You attacked " + defenderName + " for " + userExp + " damage.");
+            $("#counterStats").text(defenderName + " attacked you for " + defenderCounter + " damage.");
+            $("")
+          
+
+        })
+    }
+    chooseCharacter() 
+    
+
+    choosedefender();
+    attackPhase();
+    
+    
+    
+});
+
+
+
+
+
+
+
+
