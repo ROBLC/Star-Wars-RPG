@@ -16,23 +16,23 @@
 
 //*eahc time the user attacks his attak power increases by the base attack power 
 $("#anakin").attr("HP", 100);
-$("#anakin").attr("AP", 10);
-$("#anakin").attr("CA", 15);
+$("#anakin").attr("AP", 6);
+$("#anakin").attr("CA", 10);
 $("#anakin").attr("name", "Anakin Skywalker");
 
-$("#obi-wan").attr("HP", 180);
-$("#obi-wan").attr("AP", 15);
-$("#obi-wan").attr("CA", 25);
+$("#obi-wan").attr("HP", 120);
+$("#obi-wan").attr("AP", 8);
+$("#obi-wan").attr("CA", 15);
 $("#obi-wan").attr("name", "Obi Wan Kenobi");
 
-$("#qui-gon").attr("HP", 220);
-$("#qui-gon").attr("AP", 20);
-$("#qui-gon").attr("CA", 35);
+$("#qui-gon").attr("HP", 150);
+$("#qui-gon").attr("AP", 10);
+$("#qui-gon").attr("CA", 20);
 $("#qui-gon").attr("name", "Qui gon Jin");
 
-$("#maul").attr("HP", 250);
-$("#maul").attr("AP", 30);
-$("#maul").attr("CA", 35);
+$("#maul").attr("HP", 180);
+$("#maul").attr("AP", 12);
+$("#maul").attr("CA", 25);
 $("#maul").attr("name", "Darth Maul");
 
 var user;
@@ -69,9 +69,10 @@ $("document").ready(function(){
          userAttack = ($("#"+user)).attr("AP");
          userCounter = ($("#"+user)).attr("CA");
          userHealth = ($("#"+user)).attr("HP");
-         userName = ($("#"+user)).attr("name")
-         userHP = ($("#"+user+"HP"))
-        console.log(userHP);
+         userName = ($("#"+user)).attr("name");
+         userHP = ($("#"+user+"HP"));
+         userAP = ($("#"+user+"AP"));
+        console.log(userHP.text());
         
     });
   
@@ -85,6 +86,7 @@ $("document").ready(function(){
             defenderCounter = ($("#"+defender)).attr("CA");
             defenderHealth = ($("#"+defender)).attr("HP");
             defenderName = ($("#"+defender)).attr("name");
+            defenderHP = ($("#"+defender+"HP"));
             console.log(this);
             
 
@@ -93,19 +95,23 @@ $("document").ready(function(){
     function attackPhase(){
 
         $(attackBtn).on("click", function() {
-            
-            defenderHealth = defenderHealth - userAttack;
-            userHealth = userHealth - defenderAttack;
             userExp = userExp + Number(userAttack);
+            defenderHealth = defenderHealth - userExp;
+            userHealth = userHealth - defenderCounter;
+          
             console.log("______")
             console.log(userExp);
             console.log(userHealth);
             console.log(defenderHealth);
             $("#attackStats").text("You attacked " + defenderName + " for " + userExp + " damage.");
             $("#counterStats").text(defenderName + " attacked you for " + defenderCounter + " damage.");
-            $("")
+            $(userHP).text("HP:" + userHealth);
+            $(userAP).text("AP:" + userExp);
+            $(defenderHP).text("HP:" + defenderHealth);
+            if (defenderHP >1) {
+                
+            }
           
-
         })
     }
     chooseCharacter() 
