@@ -10,9 +10,10 @@ header {
 }
 .style {
     float:left;
-    padding: 10px;
+    padding: 5px;
     background-color:#ffff;
-    border: solid  black 1px;
+    border: solid 2px green;
+    margin:5px;
 }
 .name {
     text-align: center;
@@ -62,3 +63,8 @@ header {
     font-size: 18px;
     padding-top: 20px;
 }
+#restart {
+    display:none;
+}
+
+

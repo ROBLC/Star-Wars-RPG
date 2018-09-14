@@ -36,6 +36,10 @@ var userHP;
 var userAP;
 var defenderHP;
 var enemiesLeft = 3;
+var wins = 0;
+var losses =0;
+var restartBtn = document.querySelector("#restart");
+var gameStatus = false;
 $("document").ready(function(){
     
 $("#anakin").attr("HP", 100);
@@ -45,28 +49,31 @@ $("#anakin").attr("name", "Anakin Skywalker");
 
 $("#obi-wan").attr("HP", 120);
 $("#obi-wan").attr("AP", 8);
-$("#obi-wan").attr("CA", 15);
+$("#obi-wan").attr("CA", 8);
 $("#obi-wan").attr("name", "Obi Wan Kenobi");
 
 $("#qui-gon").attr("HP", 150);
 $("#qui-gon").attr("AP", 10);
-$("#qui-gon").attr("CA", 20);
+$("#qui-gon").attr("CA", 13);
 $("#qui-gon").attr("name", "Qui gon Jin");
 
 $("#maul").attr("HP", 180);
-$("#maul").attr("AP", 12);
-$("#maul").attr("CA", 25);
+$("#maul").attr("AP", 10);
+$("#maul").attr("CA", 15);
 $("#maul").attr("name", "Darth Maul");
     
     function chooseCharacter() {
+        $("#attackStats").text("" );
+        $("#counterStats").text("");
     $(".characterSelection").on("click", ".character", function () {
-        console.log(this);
+        $("#counterStats").text("");
+        $("#attackStats").text("");
         user= $(this).attr("id");
-        console.log(user);
         $("#characterChoosen").append($("#"+user));
         for (i=0; i < characters.length; i++) {
             if (characters[i] != user) {
                 $("#enemiesAvailable").append($("#"+characters[i]));
+                ($("#"+characters[i])).css("background-color","red");
             }
         }
          userAttack = ($("#"+user)).attr("AP");
@@ -75,7 +82,7 @@ $("#maul").attr("name", "Darth Maul");
          userName = ($("#"+user)).attr("name");
          userHP = ($("#"+user+"HP"));
          userAP = ($("#"+user+"AP"));
-        console.log(userHP.text());
+        
         
     });
   
@@ -85,6 +92,11 @@ $("#maul").attr("name", "Darth Maul");
         $("#enemiesAvailable").one("click",".character", function () {
             defender= $(this).attr("id");
             $("#defenderChoosen").append($("#"+defender));
+            ($("#"+defender)).css("background-color", "black");
+            ($("#"+defender+"HP")).css("color", "#ffff");
+            ($("#"+defender+"AP")).css("color", "#ffff");
+            ($("#"+defender+"CA")).css("color", "#ffff");
+            ($("#"+defender+"Name")).css("color", "#ffff");
             defenderAttack = ($("#"+defender)).attr("AP");
             defenderCounter = ($("#"+defender)).attr("CA");
             defenderHealth = ($("#"+defender)).attr("HP");
@@ -98,43 +110,62 @@ $("#maul").attr("name", "Darth Maul");
     function attackPhase(){
        
         $(attackBtn).on("click", function() {
-            console.log(defender);
-            if (defender === null) {
-                console.log("pick an enemy");
+            if (gameStatus){
+                $("#attackStats").text("Click play again!!" );
+                $("#counterStats").text("");
+            }
+            else if (defender === null) {
+                $("#attackStats").text("Choose an enemy first!!" );
+                $("#counterStats").text("");
             }
             else {
                 userExp = userExp + Number(userAttack);
                 defenderHealth = defenderHealth - userExp;
-                userHealth = userHealth - defenderCounter;
-          
-                console.log("______")
-                console.log(userExp);
-                console.log(userHealth);
-                console.log(defenderHealth);
                 $("#attackStats").text("You attacked " + defenderName + " for " + userExp + " damage.");
-                $("#counterStats").text(defenderName + " attacked you for " + defenderCounter + " damage.");
-                $(userHP).text("HP:" + userHealth);
                 $(userAP).text("AP:" + userExp);
                 $(defenderHP).text("HP:" + defenderHealth);
                 if (defenderHealth <= 1) {
-                    $("#attackStats").text("You defeated " + defenderName );
+                    $("#attackStats").text("You defeated " + defenderName + "!!" );
+                    $("#counterStats").text("Choose another enemy to attack");
                     ($("#"+defender)).css("display", "none");
                     defender=null;
                     enemiesLeft--;
-                    console.log("hi");
                     choosedefender();
                 }
+                else {
+                    userHealth = userHealth - defenderCounter;
+                    $("#counterStats").text(defenderName + " attacked you for " + defenderCounter + " damage.");
+                    if (userHealth < 0) {
+                        $(userHP).text("HP:0");
+                    }
+                    else {
+                        $(userHP).text("HP:" + userHealth);
+                    }
+                }
                 if (enemiesLeft === 0) {
-                    console.log("You win");
+                    gameStatus = true;
+                    wins++;
+                    $("#wins").text("Wins:"+wins);
+                    $("#attackStats").text("You won!!" );
+                    $("#counterStats").text("Play again!");
+                    ($("#restart")).css("display", "block");
+                    $(restartBtn).on("click", function() {
                     reset();
                     gameLoop();
+                    });
                 }
              
-                if (userHealth <= 0) {
-
-                    console.log("you lose");
+                else if (userHealth <= 0) {
+                    gameStatus = true;
+                    losses++;
+                    $("#losses").text("Losses:"+losses);
+                    $("#attackStats").text("You Lost!!" );
+                    $("#counterStats").text("Play again!");
+                    ($("#restart")).css("display", "block");
+                    $(restartBtn).on("click", function() {
                     reset();
                     gameLoop();
+                    });
                 }
                 console.log(enemiesLeft);
             }
@@ -167,10 +198,35 @@ $("#maul").attr("name", "Darth Maul");
         $("#maulAP").text("AP:"+($("#maul")).attr("AP"));
         $("#maulCA").text("CA:"+($("#maul")).attr("CA"));
 
+        $(".style").css("background-color","#ffff");
+        $("#anakinHP").css("color","black");
+        $("#anakinAP").css("color","black");
+        $("#anakinCA").css("color","black");
+        $("#anakinName").css("color","black");
+
+        $(".style").css("background-color","#ffff");
+        $("#obi-wanHP").css("color","black");
+        $("#obi-wanAP").css("color","black");
+        $("#obi-wanCA").css("color","black");
+        $("#obi-wanName").css("color","black");
+
+        $(".style").css("background-color","#ffff");
+        $("#qui-gonHP").css("color","black");
+        $("#qui-gonAP").css("color","black");
+        $("#qui-gonCA").css("color","black");
+        $("#qui-gonName").css("color","black");
+
+        $(".style").css("color","#ffff");
+        $("#maulHP").css("color","black");
+        $("#maulAP").css("color","black");
+        $("#maulCA").css("color","black");
+        $("#maulName").css("color","black");
+
         enemiesLeft= 3;
-        $("#counterStats").text(defenderName + " attacked you for " + defenderCounter + " damage.");
         userExp=0;
         defender=null;
+        gameStatus=false;
+        ($("#restart")).css("display", "none");
 
     }
     function gameLoop() {
