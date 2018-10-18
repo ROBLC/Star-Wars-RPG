@@ -1,10 +1,10 @@
 # Star-Wars RPG
-A simple browser game that uses some JS i have learned so far. [Play](https://roblc.github.io/Star-Wars-RPG/)
+A simple browser game that uses some JS i have learned so far. [Play the game](https://roblc.github.io/Star-Wars-RPG/)
 
 ## How to play!
 * Pick a character
 * Choose an enemy to Fight
-* Atack! and beat your enemy or lose 
+* Attack! and beat your enemy or lose 
 * If you defeat your enemy pick another one until there are none left and you win
 
 ### Game Notes
