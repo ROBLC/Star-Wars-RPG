@@ -1,5 +1,5 @@
 # Star-Wars RPG
-A simple browser game that uses some JS i have learned so far. [Play the game](https://roblc.github.io/Star-Wars-RPG/)
+A simple browser game that uses JavaScript and jQuery [Play the game](https://roblc.github.io/Star-Wars-RPG/)
 
 ## How to play!
 * Pick a character
